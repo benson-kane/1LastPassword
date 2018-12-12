@@ -1,0 +1,99 @@
+<!doctype html>
+<html ng-app="myApp"> 
+    
+<head>
+    <title>Last1Password</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+</head>
+        
+<body  ng-controller="myController">  
+
+    <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Last1Password</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/user">{{user.username}} <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" id="editLink" href="/user">Edit User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="logoutLink" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    
+    <br>
+    <div class="form-container">
+        <h5><p class="form-header">Enter new keychain:</p></h5>
+        <form method="POST" action="/keychain">
+            <div class="form-group">
+                <label for="website">Website:</label>
+                <div class="input-group"><input class="form-control" type="text" id="text" name="website"></div>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <div class="input-group"><input class="form-control" type="text" id="username" name="username"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="input-group"><input class="form-control" type="password" id="password" name="password"></div>
+            </div>
+            <input type="submit" id="enterKeychain" value="Save Keychain">
+        </form>
+    </div>
+    <hr>
+    <span id="indexMsg">
+        <%= msg %>
+    </span>
+    <hr>
+     
+    <h1>Keychains</h1>
+    <hr>
+            <div class="row">
+          <div class="col-lg-1 mx-auto"><h6>Delete?</h6></div>
+          <div class="col-lg-2 mx-auto"><h5>Website</h5></div>
+          <div class="col-lg-2 mx-auto"><h5>Username</h5></div>
+          <div class="col-lg-2 mx-auto"><h5>Password</h5></div>
+          <div class="col-lg-1 mx-auto"><h6>Toggle Visibility</h6></div>
+        </div>
+    <hr>
+    <div ng-repeat="keychain in user.keychains | orderBy: 'website'">
+        <div class="row">
+          <div class="col-lg-1 mx-auto"><span class="fa fa-remove" ng-click="delete(keychain)"></span></div>
+          <div class="col-lg-2 mx-auto"> {{keychain.website}}</div>
+          <div class="col-lg-2 mx-auto"> {{keychain.username}}</div>
+          <div class="col-lg-2 mx-auto"> <input type="password" value={{keychain.password}} id="pw_{{keychain._id}}"></div>
+          <div class="col-lg-1 mx-auto"> <button id="{{keychain._id}}" onclick="pw = document.getElementById('pw_'+this.id); if (pw.type == 'text') pw.type = 'password'; else pw.type = 'text';">toggle</button></div>
+        </div>
+    </div>
+     
+     
+    <script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+    <script src="/javascripts/my_app.js"></script>
+    
+    
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+      
+</html>
